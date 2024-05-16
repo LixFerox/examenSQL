@@ -1,0 +1,23 @@
+CREATE OR ALTER FUNCTION repeticiones (@c CHAR(1), @cad VARCHAR(500))
+RETURNS INT
+AS BEGIN
+    DECLARE @retorno INT=0
+        IF(@cad)='' BEGIN
+            SET @retorno=-1
+        END
+            ELSE BEGIN
+                DECLARE @iterar INT=1;
+                WHILE(@iterar<=LEN(@cad)) BEGIN
+                    IF(SUBSTRING(UPPER(@cad),@iterar, 1))=UPPER(@c) BEGIN
+                        SET @retorno=1
+                    END
+                        ELSE BEGIN
+                            SET @retorno=0
+                        END
+                    SET @iterar=@iterar+1;
+                END
+            END
+    RETURN @retorno
+END
+GO
+SELECT dbo.repeticiones('a', 'hola')
